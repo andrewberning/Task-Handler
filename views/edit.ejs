@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <section class="vh-100" style="background-color: #69d5c1;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-5">
+              <div class="d-flex justify-content-end align-items-center">
+                <a class='btn btn-warning my-3 w-10 align-items-center' href="/logout">Logout</a>
+              </div>
+              <h1 class="mb-3">Todos List</h1>
+              <form class="d-flex justify-content-center align-items-center mb-4" action="/todos/createTodo" method='POST'>
+                <div class="form-outline flex-fill">
+                  <input type="text" placeholder="Enter Todo Item" id="form3" name='todoItem' class="form-control form-control-lg">
+                </div>
+                <input type="submit" class="btn btn-primary ms-3">
+              </form>
+
+              <h2><%= user.userName %> has <%= left %> things left to do.</h2>
+            
+              <ul class="list-group mb-0 my-3">
+                  <% todos.forEach( el => { %>
+                    <% if (el._id == todo.id) { %> 
+                      <li class='todoItem' data-id='<%=el._id%>'>
+                        <form action="/todos/editedTodo/<%= todo.id %>?_method=PUT" method="POST">
+                          <input type="text" value="<%= el.todo %> " name="todo">
+                          <a href="/todos" class="btn btn-danger">Cancel</a>
+                          <button type="submit" class="btn btn-success">Save</button>
+                        </form>
+                      </li>
+                    <% } else { %>
+                      <li class="todoItem" data-id='<%=el._id%>'>
+                        <span class='<%= el.completed === true ? ' completed' : 'not' %>'> <%= el.todo %></span>
+                        <a class='del' href="#!" data-mdb-toggle="tooltip" title="Remove item">
+                          <i class="fas fa-times text-primary mx-3 del"></i>
+                        </a>
+                        <a href="todos/editTodo/<%= el._id %>" class="edit" title="Edit Item" data-mdb-toggle="tooltip">
+                          <i class="fas fa-pencil-alt  text-primary"></i>
+                        </a>
+                      </li>
+                    <% } %>
+                  <% }) %> 
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="/js/main.js"></script>
+</body>
+
+</html>
